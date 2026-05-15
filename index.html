@@ -1,0 +1,2487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hearopia 游戏攻略站 | Hearopia Game Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Noto Sans', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 30%, #24243e 60%, #1a1a2e 100%);
+            min-height: 100vh;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 动态背景粒子 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(254, 202, 87, 0.6);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .particle:nth-child(odd) {
+            background: rgba(102, 126, 234, 0.6);
+        }
+
+        .particle:nth-child(3n) {
+            background: rgba(240, 147, 251, 0.6);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* 发光背景 */
+        .glow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        .glow-1 {
+            top: -150px;
+            left: -150px;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        .glow-2 {
+            bottom: -150px;
+            right: -150px;
+            background: radial-gradient(circle, rgba(240, 147, 251, 0.15) 0%, transparent 70%);
+            animation: pulseGlow 4s ease-in-out infinite 2s;
+        }
+
+        .glow-3 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(254, 202, 87, 0.08) 0%, transparent 70%);
+            animation: pulseGlow 6s ease-in-out infinite 1s;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.3); opacity: 0.8; }
+        }
+
+        /* SVG纹理背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -3;
+        }
+
+        /* 头部样式 */
+        header {
+            background: rgba(15, 12, 41, 0.85);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 30px 0;
+            position: relative;
+            z-index: 100;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #667eea);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 0 60px rgba(254, 202, 87, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .logo-icon {
+            animation: spin 8s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(254, 202, 87, 0.5));
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            margin-top: 8px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* 语言切换按钮 */
+        .lang-switch {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .lang-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: transparent;
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .lang-btn:hover::before {
+            width: 150px;
+            height: 150px;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transform: scale(1.05);
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* 页面加载动画 */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .loader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            background-size: 200% 100%;
+            animation: loading 1.5s ease-in-out infinite;
+            border-radius: 2px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; width: 0; }
+            50% { background-position: 0 0; width: 70%; }
+            100% { background-position: -200% 0; width: 100%; }
+        }
+
+        /* 滚动进度条 */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #f093fb, #feca57);
+            background-size: 200% 100%;
+            z-index: 9999;
+            animation: progressGradient 3s linear infinite;
+            transition: width 0.1s ease;
+        }
+
+        @keyframes progressGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* 搜索框 */
+        .search-container {
+            position: relative;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 18px 60px 18px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+        }
+
+        .search-input::placeholder {
+            color: #888;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+            transform: scale(1.02);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            color: #888;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .search-input:focus + .search-icon {
+            color: #667eea;
+        }
+
+        /* 导航按钮 */
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+            border: 1px solid rgba(102, 126, 234, 0.25);
+            border-radius: 45px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(254, 202, 87, 0.6);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4),
+                        inset 0 0 30px rgba(254, 202, 87, 0.05);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ee5a5a 100%);
+            border-color: transparent;
+            box-shadow: 0 0 40px rgba(240, 147, 251, 0.5),
+                        0 0 80px rgba(240, 147, 251, 0.3);
+            animation: activePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes activePulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(240, 147, 251, 0.5), 0 0 80px rgba(240, 147, 251, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(240, 147, 251, 0.7), 0 0 100px rgba(240, 147, 251, 0.4); }
+        }
+
+        /* 主内容区 */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 25px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Hero区域 */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(102, 126, 234, 0.1) 50%, rgba(240, 147, 251, 0.05) 100%);
+            border-radius: 30px;
+            padding: 80px 60px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(240, 147, 251, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatOrb 8s ease-in-out infinite;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(254, 202, 87, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatOrb 8s ease-in-out infinite 4s;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, #fff, #e0e0e0, #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-desc {
+            font-size: 1.3rem;
+            color: #aaa;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 章节样式 */
+        .section {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 28px;
+            padding: 45px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(254, 202, 87, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .section:hover::before {
+            opacity: 1;
+        }
+
+        .section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border-color: rgba(254, 202, 87, 0.15);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .section-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.25), rgba(118, 75, 162, 0.25));
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover .section-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.3);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, #fff, #ccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 子章节 */
+        .subsection {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .subsection:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(254, 202, 87, 0.2);
+            transform: translateX(5px);
+        }
+
+        .subsection-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #feca57;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 优先级标签 */
+        .priority-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .priority-high {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+            animation: tagPulse 2s ease-in-out infinite;
+        }
+
+        .priority-medium {
+            background: linear-gradient(135deg, #feca57, #ffd93d);
+            color: #333;
+            box-shadow: 0 6px 20px rgba(254, 202, 87, 0.4);
+        }
+
+        .priority-low {
+            background: linear-gradient(135deg, #5cd85c, #4ade80);
+            color: #333;
+            box-shadow: 0 6px 20px rgba(92, 216, 92, 0.4);
+        }
+
+        @keyframes tagPulse {
+            0%, 100% { box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4); }
+            50% { box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6); }
+        }
+
+        /* 列表样式 */
+        ul {
+            list-style: none;
+            padding-left: 30px;
+        }
+
+        li {
+            padding: 12px 0;
+            position: relative;
+            color: #ccc;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+        }
+
+        li:hover {
+            color: #fff;
+        }
+
+        li::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        li:hover::before {
+            transform: translateY(-50%) scale(1.3);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
+        }
+
+        li strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* 提示框 */
+        .tip-box {
+            background: linear-gradient(135deg, rgba(254, 202, 87, 0.08), rgba(255, 107, 107, 0.08));
+            border-left: 5px solid #feca57;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 0 18px 18px 0;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .tip-box:hover {
+            background: linear-gradient(135deg, rgba(254, 202, 87, 0.12), rgba(255, 107, 107, 0.12));
+            transform: translateX(5px);
+        }
+
+        .tip-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .tip-content strong {
+            color: #feca57;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .tip-content p {
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* 警告框 */
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.08), rgba(254, 202, 87, 0.08));
+            border-left: 5px solid #ff6b6b;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 0 18px 18px 0;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .warning-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            animation: shake 1s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+
+        .warning-content strong {
+            color: #ff6b6b;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .warning-content p {
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* 英雄卡片 */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(102, 126, 234, 0.03));
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #feca57, transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .hero-card:hover::before {
+            opacity: 1;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(254, 202, 87, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35),
+                        inset 0 0 50px rgba(254, 202, 87, 0.03);
+        }
+
+        .hero-rarity {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding: 6px 16px;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .rarity-SS {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.25), rgba(240, 147, 251, 0.25));
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            animation: rarityGlow 2s ease-in-out infinite;
+        }
+
+        .rarity-S {
+            background: linear-gradient(135deg, rgba(254, 202, 87, 0.25), rgba(255, 193, 7, 0.25));
+            color: #feca57;
+            border: 1px solid rgba(254, 202, 87, 0.3);
+        }
+
+        @keyframes rarityGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 107, 107, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(255, 107, 107, 0.5); }
+        }
+
+        .hero-name {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .hero-avatar {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .hero-avatar::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #feca57, transparent, #667eea) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .hero-card:hover .hero-avatar {
+            transform: scale(1.15);
+            border-color: rgba(254, 202, 87, 0.4);
+        }
+
+        .hero-card:hover .hero-avatar::after {
+            opacity: 1;
+        }
+
+        .hero-skill {
+            font-size: 0.95rem;
+            color: #aaa;
+            line-height: 1.6;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* 标签切换动画 */
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 资源栏 */
+        .resource-bar {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .resource-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(102, 126, 234, 0.03));
+            border-radius: 20px;
+            padding: 25px 35px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 220px;
+        }
+
+        .resource-item:hover {
+            transform: translateY(-6px);
+            border-color: rgba(254, 202, 87, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .resource-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .resource-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .resource-item:hover .resource-icon {
+            transform: scale(1.15);
+        }
+
+        .gold-icon {
+            background: linear-gradient(135deg, #feca57, #ffd93d);
+            color: #333;
+            box-shadow: 0 8px 25px rgba(254, 202, 87, 0.5);
+        }
+
+        .diamond-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .blood-icon {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+        }
+
+        .resource-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .resource-desc {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        /* 每日清单 */
+        .daily-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .daily-item {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 18px;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .daily-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(92, 216, 92, 0.3);
+            transform: translateX(8px);
+        }
+
+        .daily-check {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(92, 216, 92, 0.15);
+            border: 2px solid #5cd85c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5cd85c;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .daily-item:hover .daily-check {
+            background: rgba(92, 216, 92, 0.3);
+            transform: scale(1.1);
+        }
+
+        .daily-text {
+            color: #ccc;
+            font-size: 1rem;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 80px;
+            background: rgba(15, 12, 41, 0.6);
+            backdrop-filter: blur(15px);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #feca57, #ff6b6b);
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #feca57;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 返回顶部按钮 */
+        .scroll-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+            z-index: 1000;
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 35px rgba(102, 126, 234, 0.7);
+        }
+
+        /* 快捷操作按钮组 */
+        .quick-actions {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .quick-actions.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .action-btn:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .theme-btn {
+            background: linear-gradient(135deg, #feca57, #ffd93d);
+            color: #333;
+            box-shadow: 0 6px 20px rgba(254, 202, 87, 0.4);
+        }
+
+        .font-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .fullscreen-btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4);
+        }
+
+        /* 工具提示 */
+        .tooltip {
+            position: absolute;
+            right: 65px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .action-btn:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-10px);
+        }
+
+        /* 目录导航 */
+        .toc {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            max-height: 70vh;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .toc.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .toc.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-50%) translateX(-20px);
+        }
+
+        /* 目录开关按钮 */
+        .toc-toggle {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            z-index: 101;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .toc-toggle.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .toc-toggle:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .toc-toggle.active {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .toc-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #feca57;
+            text-align: center;
+        }
+
+        .toc-item {
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #ccc;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toc-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea, #f093fb);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .toc-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .toc-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .toc-item.active {
+            background: rgba(254, 202, 87, 0.15);
+            color: #feca57;
+        }
+
+        /* 阅读进度指示器 */
+        .reading-progress {
+            position: fixed;
+            left: 30px;
+            bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .reading-progress.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .progress-circle {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 4;
+        }
+
+        .progress-bg {
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-bar {
+            stroke: url(#progressGradient);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #feca57;
+        }
+
+        .progress-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .progress-label {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .progress-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* 卡片3D效果 */
+        .card-3d {
+            perspective: 1000px;
+        }
+
+        .card-3d .hero-card {
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-3d .hero-card:hover {
+            transform: rotateY(10deg) rotateX(5deg) translateY(-10px) scale(1.02);
+        }
+
+        /* 内容进入动画 */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 滚动指示器 */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 100;
+        }
+
+        .scroll-indicator.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #feca57;
+            border-radius: 50%;
+            animation: scrollDown 2s infinite;
+        }
+
+        @keyframes scrollDown {
+            0% { opacity: 1; top: 8px; }
+            100% { opacity: 0; top: 35px; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.2rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-desc {
+                font-size: 1.1rem;
+            }
+
+            .hero-section {
+                padding: 50px 30px;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .nav-btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            .resource-item {
+                min-width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.2rem;
+            }
+
+            .lang-switch {
+                top: 15px;
+                right: 15px;
+            }
+
+            .lang-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+                min-width: 50px;
+            }
+
+            /* 移动端优化 */
+            .toc {
+                left: 10px;
+                right: 10px;
+                top: auto;
+                bottom: 150px;
+                transform: none;
+                max-height: 200px;
+            }
+
+            .toc.hidden {
+                transform: none;
+            }
+
+            .toc-toggle {
+                left: 10px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .reading-progress {
+                left: 10px;
+                bottom: 80px;
+            }
+
+            .quick-actions {
+                right: 20px;
+                bottom: 90px;
+            }
+
+            .scroll-top {
+                right: 20px;
+                bottom: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .action-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .tooltip {
+                display: none;
+            }
+
+            .search-container {
+                margin-bottom: 20px;
+            }
+
+            .search-input {
+                padding: 15px 50px 15px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面加载动画 -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-logo">⚔️</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 滚动进度条 -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- 动态粒子背景 -->
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 35%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 0.5s;"></div>
+        <div class="particle" style="left: 65%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 15%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 45%; animation-delay: 3.5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 0.8s;"></div>
+    </div>
+
+    <!-- 发光背景 -->
+    <div class="glow-container">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+    </div>
+
+    <!-- 头部 -->
+    <header>
+        <div class="header-content">
+            <div class="lang-switch">
+                <button class="lang-btn active" id="lang-zh" onclick="setLanguage('zh')">CN</button>
+                <button class="lang-btn" id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
+            
+            <div class="logo-container">
+                <div class="logo">
+                    <span class="logo-icon">⚔️</span>
+                    <span>Hearopia</span>
+                </div>
+                <div class="logo-subtitle" id="subtitle">游戏攻略站</div>
+            </div>
+        </div>
+        
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showTab('hero')">
+                <span data-zh="🏰 英雄祭坛" data-en="🏰 Hero Altar">🏰 英雄祭坛</span>
+            </button>
+            <button class="nav-btn" onclick="showTab('equipment')">
+                <span data-zh="⚙️ 装备系统" data-en="⚙️ Equipment">⚙️ 装备系统</span>
+            </button>
+            <button class="nav-btn" onclick="showTab('avatar')">
+                <span data-zh="🎭 化身系统" data-en="🎭 Avatar">🎭 化身系统</span>
+            </button>
+            <button class="nav-btn" onclick="showTab('resource')">
+                <span data-zh="💰 资源获取" data-en="💰 Resources">💰 资源获取</span>
+            </button>
+            <button class="nav-btn" onclick="showTab('guide')">
+                <span data-zh="📖 新手指南" data-en="📖 Guide">📖 新手指南</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="content">
+        <!-- 搜索框 -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" data-zh-placeholder="搜索攻略内容..." data-en-placeholder="Search guides..." placeholder="搜索攻略内容...">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <!-- Hero区域 -->
+        <div class="hero-section">
+            <h1 class="hero-title" id="hero-title">欢迎来到 Hearopia 攻略站</h1>
+            <p class="hero-desc" id="hero-desc">
+                这里汇集了游戏内所有核心系统的详细攻略，包括英雄养成、装备强化、化身获取、资源管理等内容。
+                无论你是刚入门的新手还是追求极致的老玩家，都能在这里找到适合自己的攻略指南。
+            </p>
+        </div>
+
+        <!-- 英雄祭坛 -->
+        <div id="hero" class="tab-content active">
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">🏰</div>
+                    <h2 class="section-title" data-zh="英雄祭坛" data-en="Hero Altar">英雄祭坛</h2>
+                </div>
+                <p style="color: #888; margin-bottom: 35px; font-size: 1.15rem; line-height: 1.8;" id="hero-desc-content">
+                    核心养成系统，包含招募、融魂、重生、洗练四大功能，是提升战力的根本途径。
+                </p>
+                
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="🎯 招募系统" data-en="🎯 Recruitment">🎯 招募系统</span>
+                        </h3>
+                        <span class="priority-tag priority-high">
+                            <span>🔥</span> <span data-zh="高优先级" data-en="High Priority">高优先级</span>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong><span data-zh="普通招募：" data-en="Normal Recruit:"></span></strong>
+                            <span data-zh="产出A、S级英雄，前期过渡使用，消耗普通招募券，每日可免费抽取5次" data-en="Produces A/S rank heroes for early game transition. Consumes normal recruit tickets. 5 free draws per day."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="高级招募：" data-en="Advanced Recruit:"></span></strong>
+                            <span data-zh="概率产出S、SS级英雄，后期核心来源，消耗高级招募券，每48小时可免费抽取1次" data-en="Chance to get S/SS rank heroes. Main source for late game. Consumes advanced recruit tickets. 1 free draw every 48 hours."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="策略建议：" data-en="Strategy:"></span></strong>
+                            <span data-zh="前期无需刻意囤高级招募券，A、S级足够过渡，资源优先投入升级而非抽卡" data-en="No need to hoard advanced tickets early game. A/S heroes are sufficient. Prioritize upgrading over summoning."></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="🔮 融魂系统" data-en="🔮 Soul Fusion"></span>
+                        </h3>
+                        <span class="priority-tag priority-medium">
+                            <span>⭐</span> <span data-zh="中优先级" data-en="Medium Priority">中优先级</span>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong><span data-zh="合成规则：" data-en="Fusion Rule:"></span></strong>
+                            <span data-zh="4个同品质A→合成S；4个同品质S→合成SS，合成时有概率直接升阶" data-en="4 same rarity A → S; 4 same rarity S → SS. Chance to upgrade directly during fusion."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="失败机制：" data-en="Failure Mechanism:"></span></strong>
+                            <span data-zh="合成存在失败概率（A→S约10%，S→SS约30%），失败后转化为英雄碎片" data-en="Failure chance exists (~10% for A→S, ~30% for S→SS). Failed fusion converts to hero fragments."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="注意事项：" data-en="Note:"></span></strong>
+                            <span data-zh="合成材料成本极高，前期不建议执着于SS级英雄，中期再开始积累" data-en="High material cost. Don't chase SS heroes early game. Start accumulating in mid game."></span>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <span class="tip-icon">💡</span>
+                        <div class="tip-content">
+                            <strong><span data-zh="重要提示" data-en="Important Tip">重要提示</span></strong>
+                            <p>
+                                <span data-zh="英雄养成材料（升级、升阶材料）可通过解雇英雄或使用商城500钻石的归零膏全额返还，无资源损耗，因此前期可放心培养A、S级过渡英雄！" data-en="Hero upgrade materials can be fully refunded by dismissing heroes or using Reset Cream (500 diamonds in shop). No resource loss, so feel free to level A/S heroes as transition!"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="✨ 重生系统" data-en="✨ Rebirth"></span>
+                        </h3>
+                        <span class="priority-tag priority-low">
+                            <span>💧</span> <span data-zh="低优先级" data-en="Low Priority">低优先级</span>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong><span data-zh="功能：" data-en="Function:"></span></strong>
+                            <span data-zh="重置英雄天赋，随机刷新天赋效果，可获得攻击、防御、暴击等稀有天赋" data-en="Reset hero talents, randomly refresh effects. Can get rare talents like ATK, DEF, Crit."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="限制：" data-en="Limit:"></span></strong>
+                            <span data-zh="每个英雄洗炼次数有固定上限（SS级20次，S级10次），且洗炼结果不可逆" data-en="Limited attempts per hero (20 for SS, 10 for S). Results are irreversible."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="建议：" data-en="Suggestion:"></span></strong>
+                            <span data-zh="仅SS级英雄毕业时使用，前期绝对不要消耗材料" data-en="Only use for SS heroes when fully built. Never use materials early game."></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="💎 成长洗练" data-en="💎 Growth Refine"></span>
+                        </h3>
+                        <span class="priority-tag priority-low">
+                            <span>💧</span> <span data-zh="低优先级" data-en="Low Priority">低优先级</span>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong><span data-zh="功能：" data-en="Function:"></span></strong>
+                            <span data-zh="调整英雄基础成长属性（力量、智力、敏捷、耐力等），每次洗练可锁定1-2条属性" data-en="Adjust hero base growth stats (STR, INT, AGI, VIT). Can lock 1-2 stats per refine."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="效果：" data-en="Effect:"></span></strong>
+                            <span data-zh="直接影响英雄后期面板强度，是打造极致英雄的关键" data-en="Directly affects late game stats. Key for building perfect heroes."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="建议：" data-en="Suggestion:"></span></strong>
+                            <span data-zh="材料稀缺，且属性刷新不可逆，无SS级英雄前禁止使用" data-en="Rare materials. Stats irreversible. Don't use without SS heroes."></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">
+                        <span data-zh="⭐ 强力英雄推荐" data-en="⭐ Recommended Heroes">⭐ 强力英雄推荐</span>
+                    </h3>
+                    <p style="color: #888; margin-bottom: 20px; font-size: 1rem;">
+                        <span data-zh="以下是各稀有度中表现出色的英雄推荐：" data-en="Here are excellent heroes by rarity:">以下是各稀有度中表现出色的英雄推荐：</span>
+                    </p>
+                    <div class="hero-grid card-3d">
+                        <div class="hero-card">
+                            <div class="hero-rarity rarity-SS">
+                                <span data-zh="SS级" data-en="SS Rank">SS级</span>
+                            </div>
+                            <div class="hero-avatar">🔥</div>
+                            <div class="hero-name" data-zh="炎龙骑士" data-en="Flame Dragon Knight">炎龙骑士</div>
+                            <div class="hero-skill">
+                                <span data-zh="烈焰风暴：对范围内所有敌人造成大量火焰伤害，并附带灼烧效果持续3秒" data-en="Flame Storm: Deals massive fire damage to all nearby enemies with burn effect for 3s"></span>
+                            </div>
+                        </div>
+                        <div class="hero-card">
+                            <div class="hero-rarity rarity-SS">
+                                <span data-zh="SS级" data-en="SS Rank">SS级</span>
+                            </div>
+                            <div class="hero-avatar">❄️</div>
+                            <div class="hero-name" data-zh="冰霜女王" data-en="Ice Queen">冰霜女王</div>
+                            <div class="hero-skill">
+                                <span data-zh="极寒领域：冻结周围敌人2秒，并降低其移动速度50%" data-en="Frozen Domain: Freezes nearby enemies for 2s, reduces movement speed by 50%"></span>
+                            </div>
+                        </div>
+                        <div class="hero-card">
+                            <div class="hero-rarity rarity-S">
+                                <span data-zh="S级" data-en="S Rank">S级</span>
+                            </div>
+                            <div class="hero-avatar">⚡</div>
+                            <div class="hero-name" data-zh="雷霆法师" data-en="Thunder Mage">雷霆法师</div>
+                            <div class="hero-skill">
+                                <span data-zh="闪电链：释放连锁闪电，在多个敌人之间跳跃，造成连续伤害" data-en="Lightning Chain: Releases chain lightning that jumps between enemies for continuous damage"></span>
+                            </div>
+                        </div>
+                        <div class="hero-card">
+                            <div class="hero-rarity rarity-S">
+                                <span data-zh="S级" data-en="S Rank">S级</span>
+                            </div>
+                            <div class="hero-avatar">🗡️</div>
+                            <div class="hero-name" data-zh="暗影刺客" data-en="Shadow Assassin">暗影刺客</div>
+                            <div class="hero-skill">
+                                <span data-zh="致命一击：瞬移到目标背后，造成高额单体伤害，有概率触发暴击" data-en="Lethal Strike: Teleports behind target, deals massive single target damage with crit chance"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 装备系统 -->
+        <div id="equipment" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">⚙️</div>
+                    <h2 class="section-title" data-zh="装备系统" data-en="Equipment">装备系统</h2>
+                </div>
+                <p style="color: #888; margin-bottom: 35px; font-size: 1.15rem; line-height: 1.8;" id="equipment-desc">
+                    <span data-zh="铁匠铺核心功能，装备是战力的核心支柱，合理养成装备能大幅提升战斗能力。" data-en="Blacksmith core features. Equipment is the backbone of combat power. Proper upgrading significantly boosts combat ability.">铁匠铺核心功能，装备是战力的核心支柱，合理养成装备能大幅提升战斗能力。</span>
+                </p>
+                
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="🔨 强化系统" data-en="🔨 Enhancement"></span>
+                        </h3>
+                        <span class="priority-tag priority-high">
+                            <span>🔥</span> <span data-zh="高优先级" data-en="High Priority">高优先级</span>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong><span data-zh="效果：" data-en="Effect:"></span></strong>
+                            <span data-zh="提升装备基础属性，强化等级直接绑定装备，无法继承到其他装备" data-en="Boosts equipment base stats. Enhancement level is bound to equipment, cannot transfer."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="材料：" data-en="Material:"></span></strong>
+                            <span data-zh="强化石通过打怪、挂机、副本大量产出，获取难度低" data-en="Enhancement stones drop from monsters, AFK, dungeons. Easy to obtain."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="建议：" data-en="Suggestion:"></span></strong>
+                            <span data-zh="前期可随意强化过渡装备，无需节省，+10以下失败概率极低（<5%）" data-en="Feel free to enhance transition gear early. Low failure rate below +10 (<5%)."></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="🌟 锻神系统" data-en="🌟 God Forge"></span>
+                        </h3>
+                        <span class="priority-tag priority-low">
+                            <span>💧</span> <span data-zh="低优先级" data-en="Low Priority">低优先级</span>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong><span data-zh="功能：" data-en="Function:"></span></strong>
+                            <span data-zh="洗炼装备的锻神专属属性，属性效果随机，可获得稀有特效" data-en="Refines unique God Forge stats. Random effects. Can get rare special effects."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="消耗：" data-en="Cost:"></span></strong>
+                            <span data-zh="海量金币（单次消耗5万-50万），且洗炼结果不可逆" data-en="Massive gold cost (50k-500k per attempt). Results irreversible."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="建议：" data-en="Suggestion:"></span></strong>
+                            <span data-zh="仅毕业装备可尝试，前期绝对不要使用" data-en="Only for endgame gear. Never use early game."></span>
+                        </li>
+                    </ul>
+                    <div class="warning-box">
+                        <span class="warning-icon">⚠️</span>
+                        <div class="warning-content">
+                            <strong><span data-zh="谨慎操作" data-en="Caution">谨慎操作</span></strong>
+                            <p>
+                                <span data-zh="锻神洗炼消耗巨大，一次洗炼可能消耗数十万金币，务必在拥有毕业装备后再考虑！建议先锁定优质属性再进行洗炼。" data-en="God Forge is extremely expensive, costing hundreds of thousands gold per attempt. Only use on endgame gear! Lock good stats first."></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="📜 词缀洗练" data-en="📜 Affix Refine"></span>
+                        </h3>
+                        <span class="priority-tag priority-medium">
+                            <span>⭐</span> <span data-zh="中优先级" data-en="Medium Priority">中优先级</span>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong><span data-zh="功能：" data-en="Function:"></span></strong>
+                            <span data-zh="重置装备的词缀属性，可获得攻击、防御、暴击、闪避等稀有属性" data-en="Resets equipment affixes. Can get rare stats like ATK, DEF, Crit, Dodge."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="材料：" data-en="Material:"></span></strong>
+                            <span data-zh="洗练石，通过活动和副本获取，相对稀缺" data-en="Refine stones from events and dungeons. Relatively rare."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="建议：" data-en="Suggestion:"></span></strong>
+                            <span data-zh="紫色以上装备值得洗练，锁定优质词缀可节省材料，优先洗练武器和饰品" data-en="Worth refining for purple+ gear. Lock good affixes to save materials. Prioritize weapons and accessories."></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 化身系统 -->
+        <div id="avatar" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">🎭</div>
+                    <h2 class="section-title" data-zh="化身系统" data-en="Avatar">化身系统</h2>
+                </div>
+                <p style="color: #888; margin-bottom: 35px; font-size: 1.15rem; line-height: 1.8;" id="avatar-desc">
+                    <span data-zh="装扮师核心系统，化身不仅是外观装饰，更是战力加成的关键途径。" data-en="Costume system core. Avatars are not just cosmetics, but key to power boost.">装扮师核心系统，化身不仅是外观装饰，更是战力加成的关键途径。</span>
+                </p>
+                
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="🎨 化身获取" data-en="🎨 Avatar Obtain"></span>
+                        </h3>
+                        <span class="priority-tag priority-high">
+                            <span>🔥</span> <span data-zh="高优先级" data-en="High Priority">高优先级</span>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong><span data-zh="S级化身：" data-en="S Rank Avatar:"></span></strong>
+                            <span data-zh="自带专属主动/被动技能，是中期战力提升的重要途径，可提供10%-20%战力加成" data-en="Comes with unique active/passive skills. Important mid-game power boost (10%-20% combat power)."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="获取途径：" data-en="Obtain Methods:"></span></strong>
+                            <span data-zh="领主挑战概率掉落（约5%）、鬼市随机刷新半价道具、活动奖励、累计充值奖励" data-en="Lord Challenge drop (~5%), Ghost Market half-price items, event rewards, cumulative recharge rewards."></span>
+                        </li>
+                        <li>
+                            <strong><span data-zh="养成建议：" data-en="Upgrade Suggestion:"></span></strong>
+                            <span data-zh="优先升级主动技能，被动技能在后期资源充裕时再提升" data-en="Prioritize upgrading active skills first. Upgrade passive skills later when resources are abundant."></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 资源获取 -->
+        <div id="resource" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">💰</div>
+                    <h2 class="section-title" data-zh="资源获取" data-en="Resources">资源获取</h2>
+                </div>
+                <p style="color: #888; margin-bottom: 35px; font-size: 1.15rem; line-height: 1.8;" id="resource-desc">
+                    <span data-zh="资源是游戏发展的命脉，合理获取和管理资源是快速成长的关键。" data-en="Resources are the lifeblood of the game. Proper acquisition and management is key to rapid growth.">资源是游戏发展的命脉，合理获取和管理资源是快速成长的关键。</span>
+                </p>
+                
+                <div class="resource-bar">
+                    <div class="resource-item">
+                        <div class="resource-icon gold-icon">💰</div>
+                        <div class="resource-info">
+                            <div class="resource-name" data-zh="金币" data-en="Gold">金币</div>
+                            <div class="resource-desc" data-zh="升级、强化、洗练消耗" data-en="Upgrade, Enhance, Refine costs">升级、强化、洗练消耗</div>
+                        </div>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon diamond-icon">💎</div>
+                        <div class="resource-info">
+                            <div class="resource-name" data-zh="钻石" data-en="Diamonds">钻石</div>
+                            <div class="resource-desc" data-zh="高级招募、商店购买" data-en="Advanced Recruit, Shop">高级招募、商店购买</div>
+                        </div>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon blood-icon">🩸</div>
+                        <div class="resource-info">
+                            <div class="resource-name" data-zh="血精" data-en="Blood Essence">血精</div>
+                            <div class="resource-desc" data-zh="化身升级、技能升级" data-en="Avatar Upgrade, Skill Upgrade">化身升级、技能升级</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">
+                            <span data-zh="🌟 每日必做" data-en="🌟 Daily Tasks"></span>
+                        </h3>
+                        <span class="priority-tag priority-high">
+                            <span>🔥</span> <span data-zh="高优先级" data-en="High Priority">高优先级</span>
+                        </span>
+                    </div>
+                    <div class="daily-list">
+                        <div class="daily-item">
+                            <div class="daily-check">✓</div>
+                            <span class="daily-text" data-zh="完成主线关卡推进" data-en="Complete main story stages">完成主线关卡推进</span>
+                        </div>
+                        <div class="daily-item">
+                            <div class="daily-check">✓</div>
+                            <span class="daily-text" data-zh="扫荡精英副本获取装备" data-en="Sweep elite dungeons for gear">扫荡精英副本获取装备</span>
+                        </div>
+                        <div class="daily-item">
+                            <div class="daily-check">✓</div>
+                            <span class="daily-text" data-zh="参与领主挑战" data-en="Participate in Lord Challenge">参与领主挑战</span>
+                        </div>
+                        <div class="daily-item">
+                            <div class="daily-check">✓</div>
+                            <span class="daily-text" data-zh="领取挂机收益" data-en="Claim AFK rewards">领取挂机收益</span>
+                        </div>
+                        <div class="daily-item">
+                            <div class="daily-check">✓</div>
+                            <span class="daily-text" data-zh="完成每日任务" data-en="Complete daily quests">完成每日任务</span>
+                        </div>
+                        <div class="daily-item">
+                            <div class="daily-check">✓</div>
+                            <span class="daily-text" data-zh="鬼市刷新购买必需品" data-en="Check Ghost Market">鬼市刷新购买必需品</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新手指南 -->
+        <div id="guide" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">📖</div>
+                    <h2 class="section-title" data-zh="新手指南" data-en="Guide">新手指南</h2>
+                </div>
+                <p style="color: #888; margin-bottom: 35px; font-size: 1.15rem; line-height: 1.8;" id="guide-desc">
+                    <span data-zh="为新手玩家提供快速入门指南，帮助你快速适应游戏节奏。" data-en="Quick start guide for new players to quickly adapt to the game.">为新手玩家提供快速入门指南，帮助你快速适应游戏节奏。</span>
+                </p>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">
+                        <span data-zh="🎯 第一天：快速升级" data-en="🎯 Day 1: Quick Leveling"></span>
+                    </h3>
+                    <ul>
+                        <li><strong><span data-zh="目标：" data-en="Goal:"></span></strong><span data-zh="尽快提升等级至30级，解锁核心功能" data-en="Reach level 30 quickly to unlock core features"></span></li>
+                        <li><strong><span data-zh="路线：" data-en="Route:"></span></strong><span data-zh="主线关卡→精英副本→日常任务" data-en="Main story → Elite dungeons → Daily quests"></span></li>
+                        <li><strong><span data-zh="资源分配：" data-en="Resource Allocation:"></span></strong><span data-zh="金币优先强化装备，钻石留作高级招募" data-en="Gold for equipment enhancement, save diamonds for advanced recruit"></span></li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">
+                        <span data-zh="📈 前七天：稳步发展" data-en="📈 First Week: Steady Growth"></span>
+                    </h3>
+                    <ul>
+                        <li><strong><span data-zh="英雄：" data-en="Heroes:"></span></strong><span data-zh="培养2-3个主力英雄，优先升级技能" data-en="Level 2-3 main heroes, prioritize skill upgrades"></span></li>
+                        <li><strong><span data-zh="装备：" data-en="Equipment:"></span></strong><span data-zh="紫色装备+10，橙色装备逐步替换" data-en="Purple gear +10, gradually replace with orange"></span></li>
+                        <li><strong><span data-zh="化身：" data-en="Avatar:"></span></strong><span data-zh="获取第一个S级化身并升级至30级" data-en="Obtain first S rank avatar and level to 30"></span></li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <span class="tip-icon">💡</span>
+                    <div class="tip-content">
+                        <strong><span data-zh="新手小贴士" data-en="New Player Tips">新手小贴士</span></strong>
+                        <p>
+                            <span data-zh="1. 不要盲目抽卡：前期A/S级英雄足够过渡，资源优先投入升级而非抽卡。<br>2. 资源管理：钻石优先用于购买体力和重置膏，而非抽卡。<br>3. 耐心积累：SS级英雄需要时间积累，不要急于求成。<br>4. 加入公会：公会商店可兑换稀有材料。" data-en="1. Don't summon blindly: A/S heroes are sufficient early game. Prioritize upgrading over summoning.<br>2. Resource management: Use diamonds for stamina and reset items, not summoning.<br>3. Be patient: SS heroes take time to accumulate.<br>4. Join a guild: Guild shop has rare materials.">1. 不要盲目抽卡：前期A/S级英雄足够过渡，资源优先投入升级而非抽卡。<br>2. 资源管理：钻石优先用于购买体力和重置膏，而非抽卡。<br>3. 耐心积累：SS级英雄需要时间积累，不要急于求成。<br>4. 加入公会：公会商店可兑换稀有材料。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" data-zh="游戏官网" data-en="Official Site">游戏官网</a>
+            <a href="#" data-zh="玩家社区" data-en="Community">玩家社区</a>
+            <a href="#" data-zh="更新日志" data-en="Changelog">更新日志</a>
+            <a href="#" data-zh="联系客服" data-en="Contact">联系客服</a>
+        </div>
+        <p data-zh="© 2024 Hearopia 攻略站 | 非官方游戏攻略网站" data-en="© 2024 Hearopia Guide | Unofficial Game Guide">© 2024 Hearopia 攻略站 | 非官方游戏攻略网站</p>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="scroll-top" onclick="scrollToTop()">
+        ↑
+    </div>
+
+    <!-- 快捷操作按钮组 -->
+    <div class="quick-actions" id="quickActions">
+        <button class="action-btn theme-btn" onclick="toggleTheme()">
+            <span class="tooltip" data-zh="切换主题" data-en="Toggle Theme">切换主题</span>
+            🎨
+        </button>
+        <button class="action-btn font-btn" onclick="toggleFontSize()">
+            <span class="tooltip" data-zh="字体大小" data-en="Font Size">字体大小</span>
+            Aa
+        </button>
+        <button class="action-btn fullscreen-btn" onclick="toggleFullscreen()">
+            <span class="tooltip" data-zh="全屏模式" data-en="Fullscreen">全屏模式</span>
+            ⛶
+        </button>
+    </div>
+
+    <!-- 目录导航 -->
+    <div class="toc" id="toc">
+        <div class="toc-title" data-zh="📚 目录导航" data-en="📚 Table of Contents">📚 目录导航</div>
+        <div class="toc-item active" onclick="scrollToSection('hero')" data-zh="🏰 英雄祭坛" data-en="🏰 Hero Altar">🏰 英雄祭坛</div>
+        <div class="toc-item" onclick="scrollToSection('equipment')" data-zh="⚙️ 装备系统" data-en="⚙️ Equipment">⚙️ 装备系统</div>
+        <div class="toc-item" onclick="scrollToSection('avatar')" data-zh="🎭 化身系统" data-en="🎭 Avatar">🎭 化身系统</div>
+        <div class="toc-item" onclick="scrollToSection('resource')" data-zh="💰 资源获取" data-en="💰 Resources">💰 资源获取</div>
+        <div class="toc-item" onclick="scrollToSection('guide')" data-zh="📖 新手指南" data-en="📖 Guide">📖 新手指南</div>
+    </div>
+
+    <!-- 目录开关按钮 -->
+    <button class="toc-toggle" id="tocToggle" onclick="toggleTOC()">
+        📚
+    </button>
+
+    <!-- 阅读进度指示器 -->
+    <div class="reading-progress" id="readingProgress">
+        <div class="progress-circle">
+            <svg width="50" height="50">
+                <circle class="progress-bg" cx="25" cy="25" r="20"></circle>
+                <circle class="progress-bar" cx="25" cy="25" r="20" stroke-dasharray="125.6" stroke-dashoffset="125.6"></circle>
+            </svg>
+            <div class="progress-text" id="progressText">0%</div>
+        </div>
+        <div class="progress-info">
+            <span class="progress-label" data-zh="阅读进度" data-en="Reading Progress">阅读进度</span>
+            <span class="progress-value" id="progressValue">0%</span>
+        </div>
+    </div>
+
+    <!-- SVG渐变定义 -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#667eea" />
+                <stop offset="50%" style="stop-color:#f093fb" />
+                <stop offset="100%" style="stop-color:#feca57" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- 滚动指示器 -->
+    <div class="scroll-indicator" id="scrollIndicator">
+        <span></span>
+    </div>
+
+    <script>
+        // 页面加载完成后隐藏加载动画
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('pageLoader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // 滚动进度条
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+        });
+
+        // 搜索功能
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const allTextElements = document.querySelectorAll('.section, .subsection, li, p');
+            
+            allTextElements.forEach(element => {
+                if (searchTerm === '') {
+                    element.style.display = '';
+                    element.style.opacity = '1';
+                } else {
+                    const text = element.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        element.style.display = '';
+                        element.style.opacity = '1';
+                        element.style.background = 'rgba(254, 202, 87, 0.1)';
+                        element.style.borderRadius = '10px';
+                        element.style.padding = '10px';
+                    } else {
+                        element.style.opacity = '0.3';
+                    }
+                }
+            });
+        });
+
+        // 标签切换功能
+        function showTab(tabId) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            const navBtns = document.querySelectorAll('.nav-btn');
+            
+            tabContents.forEach(content => content.classList.remove('active'));
+            navBtns.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // 返回顶部
+        window.onscroll = function() {
+            const scrollTopBtn = document.querySelector('.scroll-top');
+            const quickActions = document.getElementById('quickActions');
+            const toc = document.getElementById('toc');
+            const tocToggle = document.getElementById('tocToggle');
+            const readingProgress = document.getElementById('readingProgress');
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollTopBtn.classList.add('show');
+                quickActions.classList.add('show');
+                tocToggle.classList.add('show');
+                readingProgress.classList.add('show');
+                scrollIndicator.classList.remove('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+                quickActions.classList.remove('show');
+                tocToggle.classList.remove('show');
+                readingProgress.classList.remove('show');
+                scrollIndicator.classList.add('show');
+            }
+            
+            // 更新阅读进度
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = Math.round((scrollTop / scrollHeight) * 100);
+            
+            const progressCircle = document.querySelector('.progress-bar');
+            const progressText = document.getElementById('progressText');
+            const progressValue = document.getElementById('progressValue');
+            
+            const circumference = 125.6;
+            const offset = circumference - (scrollPercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+            progressText.textContent = scrollPercent + '%';
+            progressValue.textContent = scrollPercent + '%';
+            
+            // 更新目录高亮
+            updateTOCHighlight();
+        };
+
+        // 更新目录高亮
+        function updateTOCHighlight() {
+            const sections = ['hero', 'equipment', 'avatar', 'resource', 'guide'];
+            const tocItems = document.querySelectorAll('.toc-item');
+            
+            sections.forEach((sectionId, index) => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 200 && rect.bottom >= 200) {
+                        tocItems.forEach(item => item.classList.remove('active'));
+                        tocItems[index].classList.add('active');
+                    }
+                }
+            });
+        }
+
+        // 滚动到指定章节
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // 切换目录显示/隐藏
+        let tocVisible = false;
+        function toggleTOC() {
+            const toc = document.getElementById('toc');
+            const tocToggle = document.getElementById('tocToggle');
+            
+            if (tocVisible) {
+                toc.classList.add('hidden');
+                toc.classList.remove('show');
+                tocToggle.classList.remove('active');
+                tocVisible = false;
+            } else {
+                toc.classList.remove('hidden');
+                toc.classList.add('show');
+                tocToggle.classList.add('active');
+                tocVisible = true;
+            }
+        }
+
+        // 切换主题
+        let currentTheme = 'dark';
+        function toggleTheme() {
+            const body = document.body;
+            if (currentTheme === 'dark') {
+                body.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+                body.style.color = '#333';
+                currentTheme = 'light';
+            } else {
+                body.style.background = 'linear-gradient(135deg, #0f0c29 0%, #302b63 30%, #24243e 60%, #1a1a2e 100%)';
+                body.style.color = '#fff';
+                currentTheme = 'dark';
+            }
+        }
+
+        // 切换字体大小
+        let fontSizeLevel = 1;
+        function toggleFontSize() {
+            fontSizeLevel = fontSizeLevel >= 3 ? 1 : fontSizeLevel + 1;
+            const sizes = ['1rem', '1.1rem', '1.2rem', '1.3rem'];
+            document.body.style.fontSize = sizes[fontSizeLevel - 1];
+        }
+
+        // 全屏模式
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // 内容进入动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section, .subsection, .hero-card').forEach(el => {
+            el.classList.add('fade-in-up');
+            observer.observe(el);
+        });
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        // 语言切换功能
+        let currentLang = 'zh';
+
+        function setLanguage(lang) {
+            if (lang === currentLang) return;
+            
+            currentLang = lang;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+            
+            // 更新所有带data-zh和data-en属性的元素
+            const elements = document.querySelectorAll('[data-zh][data-en]');
+            elements.forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+            
+            // 更新特殊元素
+            document.getElementById('subtitle').textContent = lang === 'zh' ? '游戏攻略站' : 'Game Guide';
+            document.getElementById('hero-title').textContent = lang === 'zh' ? '欢迎来到 Hearopia 攻略站' : 'Welcome to Hearopia Guide';
+            document.getElementById('hero-desc').textContent = lang === 'zh' 
+                ? '这里汇集了游戏内所有核心系统的详细攻略，包括英雄养成、装备强化、化身获取、资源管理等内容。无论你是刚入门的新手还是追求极致的老玩家，都能在这里找到适合自己的攻略指南。' 
+                : 'Comprehensive guides for all core game systems including hero upgrading, equipment enhancement, avatar acquisition, and resource management. Whether you\'re a new player or a veteran, you\'ll find guides tailored for you.';
+            
+            document.getElementById('hero-desc-content').textContent = lang === 'zh' 
+                ? '核心养成系统，包含招募、融魂、重生、洗练四大功能，是提升战力的根本途径。' 
+                : 'Core upgrade system featuring recruitment, soul fusion, rebirth, and growth refine - the foundation of combat power.';
+            
+            document.getElementById('equipment-desc').textContent = lang === 'zh' 
+                ? '铁匠铺核心功能，装备是战力的核心支柱，合理养成装备能大幅提升战斗能力。' 
+                : 'Blacksmith core features. Equipment is the backbone of combat power. Proper upgrading significantly boosts combat ability.';
+            
+            document.getElementById('avatar-desc').textContent = lang === 'zh' 
+                ? '装扮师核心系统，化身不仅是外观装饰，更是战力加成的关键途径。' 
+                : 'Costume system core. Avatars are not just cosmetics, but key to power boost.';
+            
+            document.getElementById('resource-desc').textContent = lang === 'zh' 
+                ? '资源是游戏发展的命脉，合理获取和管理资源是快速成长的关键。' 
+                : 'Resources are the lifeblood of the game. Proper acquisition and management is key to rapid growth.';
+            
+            document.getElementById('guide-desc').textContent = lang === 'zh' 
+                ? '为新手玩家提供快速入门指南，帮助你快速适应游戏节奏。' 
+                : 'Quick start guide for new players to quickly adapt to the game.';
+            
+            // 更新搜索框placeholder
+            document.getElementById('searchInput').placeholder = lang === 'zh' ? '搜索攻略内容...' : 'Search guides...';
+            
+            // 更新目录导航
+            const tocItems = document.querySelectorAll('.toc-item');
+            tocItems.forEach(item => {
+                const zhText = item.getAttribute('data-zh');
+                const enText = item.getAttribute('data-en');
+                if (zhText && enText) {
+                    item.textContent = lang === 'zh' ? zhText : enText;
+                }
+            });
+            
+            // 更新工具提示
+            const tooltips = document.querySelectorAll('.tooltip');
+            tooltips.forEach(tooltip => {
+                const zhText = tooltip.getAttribute('data-zh');
+                const enText = tooltip.getAttribute('data-en');
+                if (zhText && enText) {
+                    tooltip.textContent = lang === 'zh' ? zhText : enText;
+                }
+            });
+            
+            // 更新其他元素
+            document.querySelector('.toc-title').textContent = lang === 'zh' ? '📚 目录导航' : '📚 Table of Contents';
+            document.querySelector('.progress-label').textContent = lang === 'zh' ? '阅读进度' : 'Reading Progress';
+        }
+    </script>
+</body>
+</html>
